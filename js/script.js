@@ -87,8 +87,28 @@ elSelect.addEventListener("change", () => {
 
 //searchFilms
 elSearchBtn.addEventListener("click", () => {
-    let searchFilim = moviesSort.slice(0,100).filter(film =>  film.categories.includes(elSelect.value) && film.year > elSearchInput.value.trim());
-    return listItemRender(searchFilim);
+    let searchFilim;
+    if(elSelect.value == "all") {
+        searchFilim = moviesSort.slice(0,100).filter(film =>  elSelect.value == "all" && film.year > elSearchInput.value.trim());
+        return listItemRender(searchFilim);
+    }else {
+        searchFilim = moviesSort.slice(0,100).filter(film =>   film.categories.includes(elSelect.value) && film.year > elSearchInput.value.trim());
+        return listItemRender(searchFilim);
+    }
+})
+
+document.addEventListener("keydown", (evt) => {
+    if(evt.keyCode == 13) {
+        let searchFilim;
+        if(elSelect.value == "all") {
+            searchFilim = moviesSort.slice(0,100).filter(film =>  elSelect.value == "all" && film.year > elSearchInput.value.trim());
+            return listItemRender(searchFilim);
+        }else {
+            searchFilim = moviesSort.slice(0,100).filter(film =>   film.categories.includes(elSelect.value) && film.year > elSearchInput.value.trim());
+            return listItemRender(searchFilim);
+        }
+    }
+
 })
 
  
