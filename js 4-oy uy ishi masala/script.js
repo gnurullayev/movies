@@ -46,3 +46,50 @@ let task5 = (str,number) => {
    console.log(result);
 }
 task5("hello", 6);
+
+
+//6-masala
+function countBy(x, n) {
+    let z = [];
+    for(let i = x; i <= x*n; i+=x) {
+      z.push(i)
+    }
+  
+    return z;
+}
+console.log(countBy(2,8));
+
+
+//7-masala
+function between(a, b) {
+    let arr = [];
+    for(let i = a; i <= b; i++) {
+      arr.push(i)
+    }
+    
+    return arr
+}
+console.log(between(5,15));
+
+
+//8-masala
+function century(year) {
+    let result = Math.ceil(year/100)
+    return result;
+}
+console.log(century(2020));
+
+//9-masala
+function maxMultiple(divisor, bound){
+    let numbers = [];
+    for(let i = divisor; i <= bound; i += divisor) {
+    numbers.push(i)
+    }
+    let result = numbers.reduce((a,b) => {
+     return  a > b ? a : b
+    })
+    return result
+}
+console.log(maxMultiple(3,10));
+
+ 

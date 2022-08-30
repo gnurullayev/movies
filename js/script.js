@@ -3,9 +3,13 @@ let ellist = document.querySelector(".js-list");
 let elTemplate = document.querySelector(".js-template").content;
 let elSearchInput = document.querySelector(".js-search-input");
 let elSearchBtn = document.querySelector(".js-search-btn");
+let sortSelect = document.querySelector(".js-sort-select");
+let elSortBtn = document.querySelector(".js-sort-btn");
+
 
 
 let options = [];
+
 
 let moviesSort = movies.map(movie => {
     return {
@@ -22,6 +26,8 @@ let moviesSort = movies.map(movie => {
         ytid: movie.ytid,
     }
 })
+
+let moviesTop = moviesSort.slice(0,100)
 
 // addTemplateClone
 function addTemplateClone (movie) {
@@ -49,7 +55,7 @@ function listItemRender(movies) {
 
     return ellist.appendChild(elWrapperTemplate)
 }
-listItemRender(moviesSort.slice(0,100));
+listItemRender(moviesTop);
 
 //ilterOptionElements
 function filterOptionElements (array) {
@@ -75,11 +81,11 @@ addSelectOption();
 
 // listfilter
 elSelect.addEventListener("change", () => {
-    let filterFilms = moviesSort.slice(0,100).filter(film => film.categories.includes(elSelect.value));
+    let filterFilms = moviesTop.filter(film => film.categories.includes(elSelect.value));
 
     console.log(filterFilms);
     if(elSelect.value == "all") {
-        return listItemRender(moviesSort.slice(0,100));
+        return listItemRender(moviesTop);
     }else {
         return listItemRender(filterFilms);
     }
@@ -87,12 +93,13 @@ elSelect.addEventListener("change", () => {
 
 //searchFilms
 elSearchBtn.addEventListener("click", () => {
+    sortMovies()
     let searchFilim;
     if(elSelect.value == "all") {
-        searchFilim = moviesSort.slice(0,100).filter(film =>  elSelect.value == "all" && film.year > elSearchInput.value.trim());
+        searchFilim = moviesTop.filter(film =>  elSelect.value == "all" && film.year > elSearchInput.value.trim());
         return listItemRender(searchFilim);
     }else {
-        searchFilim = moviesSort.slice(0,100).filter(film =>   film.categories.includes(elSelect.value) && film.year > elSearchInput.value.trim());
+        searchFilim = moviesTop.filter(film =>   film.categories.includes(elSelect.value) && film.year > elSearchInput.value.trim());
         return listItemRender(searchFilim);
     }
 })
@@ -101,12 +108,32 @@ document.addEventListener("keydown", (evt) => {
     if(evt.keyCode == 13) {
         let searchFilim;
         if(elSelect.value == "all") {
-            searchFilim = moviesSort.slice(0,100).filter(film =>  elSelect.value == "all" && film.year > elSearchInput.value.trim());
+            searchFilim =moviesTop.filter(film =>  elSelect.value == "all" && film.year > elSearchInput.value.trim());
             return listItemRender(searchFilim);
         }else {
-            searchFilim = moviesSort.slice(0,100).filter(film =>   film.categories.includes(elSelect.value) && film.year > elSearchInput.value.trim());
+            searchFilim = moviesTop.filter(film =>   film.categories.includes(elSelect.value) && film.year > elSearchInput.value.trim());
             return listItemRender(searchFilim);
         }
     }
-
 })
+
+function sortMovies () {
+   
+    let sortMovies = moviesTop.sort((a,b) => {
+        if(a.title > b.title) return 1;
+        if(a.title < b.title) return -1;
+        return 0;
+    })
+
+    let MoviesRatingSort = moviesSort.sort((a,b) => b.rating-a.rating);
+
+    if (sortSelect.value == "a-z") listItemRender(sortMovies);
+    else if(sortSelect.value == "z-a") listItemRender(sortMovies.reverse());
+    else if(sortSelect.value == "rating") listItemRender(MoviesRatingSort);
+
+    console.log(sortMovies);
+}
+
+sortSelect.addEventListener("change", sortMovies)
+
+
