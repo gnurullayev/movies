@@ -1,0 +1,113 @@
+
+.card {
+    min-height: 100%;
+}
+
+
+.modals {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    justify-content:center;
+    align-items: center;
+    background-color: rgba( 0, 0, 0, 0.8);
+}
+
+.modal-contents {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    /* text-align: center; */
+}
+.img {
+    width: 350px;
+    height: 250px;
+    object-fit: cover;
+}
+
+.modal-left {
+    width: 100%;
+    max-width: 450px;
+    padding-right: 10px;
+}
+
+.bookmark {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+}
+
+.bookmark i{
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 35px;
+    color: rgb(243, 172, 18);
+    transition: all 0.3s linear;
+}
+
+.bookmark i:hover {
+    color: rgb(255, 102, 0);
+    box-shadow: 1.8px 3.5px 3.5px hsl(0deg 0% 0% / 0.45);
+
+}
+
+.modal-title {
+    font-size: 24px;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.movie-info {
+    margin: 0;
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+.movie-info-item {
+    font-size: 18px;
+}
+
+.movi-summary {
+    margin-bottom: 0;
+    padding: 20px 15px;
+    font-size: 18px;
+    color: #999;
+}
+
+.modal-clouse {
+    position: absolute;
+    top: -38px;
+    right: -32px;
+    text-align: center;
+    font-size: 40px;
+    color: rgb(247, 244, 244);
+    border: none;
+    background-color: transparent;
+    transition: all 0.3s linear;
+}
+
+.modal-clouse:hover {
+    transform: rotate(180deg);
+}
+
+
+
+.active {
+    display: flex;
+}
