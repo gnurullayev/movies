@@ -13,28 +13,44 @@
     <header class="header py-5">
         <div class="container">
             <div class="header-inner row justify-content-between gy-5">
-                <div class="col-lg-3">
-                    <label class="w-100" for="">
-                        <select class="form-select w-100 js-select" name="" id="">
-                            <option value="all">All</option>
-                        </select>
-                    </label>
-                </div>
-                
-                <div class="col-lg-2 d-flex">
-                    <select class="form-select w-100 js-sort-select" name="" id="">
-                        <option hidden>Tanlang</option>
-                        <option value="a-z">A-Z</option>
-                        <option value="z-a">Z-A</option>
-                        <option value="rating">Yuqori reyting</option>
-                    </select>
-                </div>
+                <div class="col-lg-8">
+                    <form class="js-form">
+                        <div class="row">
+                            <div class="col-lg-3 d-flex">
+                                <label class="w-100 form-label mb-0" for="">
+                                    <input class="form-control js-search-input" type="text" placeholder="Fim title">
+                                </label>
+                            </div>
 
-                <div class="col-lg-3 d-flex">
-                    <label class="w-100 form-label mb-0" for="">
-                        <input class="form-control js-search-input" type="text" placeholder="Film year">
-                    </label>
-                    <button  class="btn btn-success w-50 d-inline-block js-search-btn ms-2">Send</button>
+                            <div class="col-lg-3">
+                                <label class="w-100" for="">
+                                    <select class="form-select w-100 js-categories-select" name="" id="">
+                                        <option value="All">All</option>
+                                    </select>
+                                </label>
+                            </div>
+                            
+                            <div class="col-lg-3 d-flex">
+                                <select class="form-select w-100 js-sort-select" name="" id="">
+                                    <option hidden>Tanlang</option>
+                                    <option value="az">A-Z</option>
+                                    <option value="za">Z-A</option>
+                                    <option value="ratingTop">Reytingi yuqri</option>
+                                    <option value="ratingBottom">ReytingiPas</option>
+                                </select>
+                            </div>
+
+                            <div class="col-lg-1 d-flex">
+                                <label class="w-100 form-label mb-0" for="">
+                                    <input class="form-control js-film-rating" type="number" value="6" placeholder="7.5" step="any">
+                                </label>
+                            </div>
+
+                            <div class="col-lg-2">
+                            <button  class="btn btn-success w-100 d-inline-block js-search-btn" type="submit">Send</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="col-lg-4 d-flex justify-content-center justify-content-md-end">

@@ -1,10 +1,10 @@
-let elSelect = document.querySelector(".js-select");
-let ellist = document.querySelector(".js-list");
-let elTemplate = document.querySelector(".js-template").content;
+let elForm = document.querySelector(".js-form");
+let elCategoriesSelect = document.querySelector(".js-categories-select");
 let elSearchInput = document.querySelector(".js-search-input");
-let elSearchBtn = document.querySelector(".js-search-btn");
-let sortSelect = document.querySelector(".js-sort-select");
-let elSortBtn = document.querySelector(".js-sort-btn");
+let elSortSelect = document.querySelector(".js-sort-select");
+let elFilmRating = document.querySelector(".js-film-rating");
+
+let ellist = document.querySelector(".js-list");
 
 let elModal = document.querySelector(".js-modal");
 let elModalContent = document.querySelector(".modal-contents");
@@ -36,35 +36,9 @@ let moviesSort = movies.map((movie,i) => {
 localStorage.setItem("movies", JSON.stringify(moviesSort))
 
 //LocaleStorageGet
-let moviesTop = JSON.parse(localStorage.getItem("movies")) ? JSON.parse(localStorage.getItem("movies")).slice(0,10) : [];
+let moviesTop = JSON.parse(localStorage.getItem("movies")) ? JSON.parse(localStorage.getItem("movies")).slice(0,50) : [];
 
 
-// addTemplateClone
-// function addTemplateClone (movie) {
-//     let elItemElement = elTemplate.cloneNode(true);
-//     elItemElement.querySelector(".js-card-img").src = movie.img;
-//     elItemElement.querySelector(".js-card-img").alt = movie.title;
-//     elItemElement.querySelector(".js-card-title").textContent = movie.title.slice(0,20) + "... ";
-//     elItemElement.querySelector(".js-card-title").title = movie.title;
-//     elItemElement.querySelector(".js-card-year").textContent ="year: " + movie.year;
-//     elItemElement.querySelector(".js-card-rating").textContent ="rating: " + movie.rating;
-//     elItemElement.querySelector(".js-card-summary").textContent = movie.summary.slice(0,50) +"...";
-//     elItemElement.querySelector(".js-card-youtube").href = `https://www.youtube.com/watch?v=${movie.ytid}_channel`;
-//     elItemElement.querySelector(".js-card-youtube").target = `blank`;
-//     return elItemElement
-// }
-
-// listItemRender
-// function listItemRender(movies) {
-//    let elWrapperTemplate = document.createDocumentFragment();
-
-//     ellist.innerHTML = null;
-//     movies.forEach(move => {
-//         elWrapperTemplate.append(addTemplateClone(move));
-//     })
-
-//     return ellist.appendChild(elWrapperTemplate)
-// }
 
 function listItemRender(movies) {
     ellist.innerHTML = null;
@@ -76,22 +50,24 @@ function listItemRender(movies) {
                     <div class="card-body">
                         <h4 class="card-title h5 js-card-title" title= "${movie.title}">${movie.title.slice(0,20) + "... "}</h4>
 
-                        <strong class="card-year mb-1 js-card-year d-block">Year: ${ movie.year}</strong>
+                        <strong class="card-year mb-1 js-card-year d-block"><i class="bi bi-calendar"></i> ${ movie.year}</strong>
 
-                        <strong class="card-rating mb-1 js-card-rating d-block">Rating: ${movie.rating}</strong>
-                        <button class=bookmark><i class="bi bi-bookmark-heart"></i></button>
-
-                        <p class="card-text js-card-summary fs-5">${movie.summary.slice(0,50) +"..."}</p>
-
-                        <div class="card-footer d-flex justify-content-between  bg-white" >
-                            <a  class="btn btn-outline-dark js-card-youtube" href=https://www.youtube.com/watch?v=${movie.ytid}_channel target=blank>Youtube Link</a>
-                            <button class=" btn btn-outline-success modal-oppen ">More info</button>
-                        </div>
+                        <strong class="card-rating mb-1 js-card-rating d-block">
+                        <span><i class="bi bi-star-fill"></i></span>
+                         ${movie.rating}</strong>
+                        <button class=bookmark><i class="bi bi-bookmark-heart"></i></button>                       
                     </div>
+
+                    <div class="card-footer d-flex justify-content-between  bg-white" >
+                    <a  class="btn btn-outline-dark js-card-youtube" href=https://www.youtube.com/watch?v=${movie.ytid}_channel target=blank>Youtube Link</a>
+                    <button class=" btn btn-outline-success modal-oppen ">More info</button>
+                </div>
                 </div>
             </li>
         ` 
     })
+
+    modalOppenfunction (movies)
 }
 listItemRender(moviesTop);
 
@@ -103,7 +79,7 @@ function filterOptionElements (array) {
         })
     })
 }
-filterOptionElements(moviesSort)
+filterOptionElements(moviesTop)
 
 //addSelectOption
 function addSelectOption() {
@@ -112,80 +88,56 @@ function addSelectOption() {
         elOption.value = option;
         elOption.textContent = option;
 
-        elSelect.appendChild(elOption)
+        elCategoriesSelect.appendChild(elOption)
     })
 }
 addSelectOption();
 
-// listfilter
-elSelect.addEventListener("change", () => {
-    let filterFilms = moviesTop.filter(film => film.categories.includes(elSelect.value));
-
-    console.log(filterFilms);
-    if(elSelect.value == "all") {
-        return listItemRender(moviesTop);
-    }else {
-        return listItemRender(filterFilms);
-    }
-})
-
-//searchFilms
-elSearchBtn.addEventListener("click", () => {
-    sortMovies()
-    let searchFilim;
-    if(elSelect.value == "all") {
-        searchFilim = moviesTop.filter(film =>  elSelect.value == "all" && film.year > elSearchInput.value.trim());
-        return listItemRender(searchFilim);
-    }else {
-        searchFilim = moviesTop.filter(film =>   film.categories.includes(elSelect.value) && film.year > elSearchInput.value.trim());
-        return listItemRender(searchFilim);
-    }
-})
-
-document.addEventListener("keydown", (evt) => {
-    if(evt.keyCode == 13) {
-        let searchFilim;
-        if(elSelect.value == "all") {
-            searchFilim =moviesTop.filter(film =>  elSelect.value == "all" && film.year > elSearchInput.value.trim());
-            return listItemRender(searchFilim);
-        }else {
-            searchFilim = moviesTop.filter(film =>   film.categories.includes(elSelect.value) && film.year > elSearchInput.value.trim());
-            return listItemRender(searchFilim);
-        }
-    }
-})
-
-function sortMovies () {
-   
-    let sortMovies = moviesTop.sort((a,b) => {
-        if(a.title > b.title) return 1;
-        if(a.title < b.title) return -1;
-        return 0;
+//MoviesFilter
+elForm.addEventListener("submit", (evt) => {
+    evt.preventDefault();
+    let titleRegex = new RegExp(elSearchInput.value.trim(), "gi");
+    let filmRating = Number(elFilmRating.value)
+    console.log(filmRating);
+    
+    let filterMovies = moviesTop.filter(movie => {
+        let gener = elCategoriesSelect.value == "All" || movie.categories.includes(elCategoriesSelect.value)
+        console.log(filmRating > movie.rating);
+        return gener && movie.title.match(titleRegex) && (movie.rating > filmRating
+        );
     })
 
-    let MoviesRatingSort = moviesTop.sort((a,b) => b.rating-a.rating);
+    sortedMovies(filterMovies)
 
-    if (sortSelect.value == "a-z") {
-        modalOppenfunction(sortMovies)
-       return listItemRender(sortMovies);
-    }
+    listItemRender(filterMovies)
 
-    else if(sortSelect.value == "z-a") {
-       return listItemRender(sortMovies.reverse());
-    }
-    else if(sortSelect.value == "rating") {
-       return listItemRender(MoviesRatingSort);
-    }
+})
+
+Array.prototype.SortedTitle = function () {
+    return this.sort((a,b) => {
+        if(a.title > b.title) return 1;
+        if(b.title > a.title) return -1;
+        return 0;
+    })
+}
+Array.prototype.SortedRating = function () {
+    return this.sort((a,b) => b.rating - a.rating)
 }
 
-sortSelect.addEventListener("change", sortMovies)
+function sortedMovies(arr) {
+    if(elSortSelect.value == "az") listItemRender(arr.SortedTitle());
+    else if(elSortSelect.value == "za") listItemRender(arr.SortedTitle().reverse())
+    else if(elSortSelect.value == "ratingTop") listItemRender(arr.SortedRating())
+    else if(elSortSelect.value == "ratingBottom") listItemRender(arr.SortedRating().reverse())
+}
 
-let modalOppenBtn = document.querySelectorAll(".modal-oppen");
+[].rev
 
 modalOppenfunction(moviesTop)
 
 //oppenModal
 function modalOppenfunction (movies1) {
+    let modalOppenBtn = document.querySelectorAll(".modal-oppen");
     modalOppenBtn.forEach((oppen,index) => {
 
     oppen.addEventListener("click",(evt) => {

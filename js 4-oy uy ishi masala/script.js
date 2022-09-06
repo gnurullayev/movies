@@ -146,6 +146,8 @@ function numEkub (num1,num2) {
 
     let arr1 = numberDivisors(num1)
     let arr2 = numberDivisors(num2)
+    console.log(arr1);
+    console.log(arr2);
     let result = arr1.filter(el => arr2.includes(el)).reduce((a,b) => a > b ? a : b)
     return result === 1 ? true : false
 }
@@ -161,7 +163,7 @@ function isogram(input) {
 console.log(isogram("salom"));
 
 
-15-masala
+// 15-masala
 function factorial(num) {
     if(num < 0 || num > 12 ) {
         throw new RangeError("ValueError")
